@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h1>Welcome to the User Management Portal</h1>
+            <p class="lead">Efficiently manage your users and permissions with our powerful tools.</p>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('user_list') }}" class="btn btn-custom">Manage Users</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-custom">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-custom ml-2">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="feature-box">
+                <h3>User Management</h3>
+                <p>Easily add, edit, and remove users from your system. Control access and permissions with just a few clicks.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box">
+                <h3>Role-Based Access</h3>
+                <p>Define custom roles and assign permissions to ensure users have the right level of access to your system.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-box">
+                <h3>Secure Authentication</h3>
+                <p>Our system uses industry-standard security practices to keep your user data safe and secure.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
