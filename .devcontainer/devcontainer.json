@@ -1,0 +1,22 @@
+{
+  "name": "Cloud UMP",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "20" }
+  },
+  "forwardPorts": [8000, 5173],
+  "portsAttributes": {
+    "5173": { "label": "Frontend (React)", "onAutoForward": "openBrowser" },
+    "8000": { "label": "Backend API (FastAPI)" }
+  },
+  "postCreateCommand": "cd backend && pip install -r requirements.txt && cp .env.example .env && cd ../frontend && npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python", "ms-python.vscode-pylance",
+        "charliermarsh.ruff", "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
