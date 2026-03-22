@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
-import { ShieldCheck, TrendingUp } from 'lucide-react'
+import { Activity, Shield, TrendingUp } from 'lucide-react'
 import api from '../lib/api'
 import { useAuthStore, can } from '../lib/store'
+import Card from '../components/ui/Card'
+import Stat from '../components/ui/Stat'
+
+function timeAgo(date: string) {
+  const s = Math.floor((Date.now() - new Date(date).getTime()) / 1000)
+  if (s < 60) return 'just now'
+  if (s < 3600) return `${Math.floor(s/60)}m ago`
+  if (s < 86400) return `${Math.floor(s/3600)}h ago`
+  return `${Math.floor(s/86400)}d ago`
+}
 
 export default function Analytics() {
   const { user } = useAuthStore()
@@ -15,66 +25,83 @@ export default function Analytics() {
   }, [])
 
   if (!can(user?.role || '', 'analytics:read'))
-    return <div className="text-gray-500 text-sm p-6">You don't have permission to view analytics.</div>
+    return (
+      <div className="flex items-center justify-center h-48">
+        <p className="text-sm text-[var(--text-3)]">Insufficient permissions to view analytics.</p>
+      </div>
+    )
 
-  if (!data) return <div className="text-gray-500 text-sm p-6">Loading...</div>
+  if (!data)
+    return (
+      <div className="flex items-center justify-center h-48">
+        <div className="h-4 w-4 rounded-full border-2 border-[var(--accent)] border-t-transparent animate-spin" />
+      </div>
+    )
 
-  const colors = ['#3b82f6','#8b5cf6','#14b8a6','#f59e0b','#ef4444']
+  const ACCENT_COLORS = ['#4f46e5', '#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe']
 
   return (
-    <div className="max-w-5xl space-y-5">
-      <div>
-        <h1 className="text-xl font-semibold text-white">Analytics</h1>
-        <p className="text-gray-400 text-sm">Platform usage and audit overview</p>
+    <div className="space-y-6">
+      <div className="fade-up">
+        <h1 className="text-xl font-semibold tracking-tight">Analytics</h1>
+        <p className="text-sm text-[var(--text-2)] mt-0.5">Platform usage and audit overview</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        {[
-          { label: 'Total users', value: data.total_users },
-          { label: 'Active agents', value: data.active_agents },
-          { label: 'Audit events', value: data.total_audit_events },
-        ].map(s => (
-          <div key={s.label} className="bg-[#161b27] border border-[#1e2535] rounded-2xl p-5">
-            <p className="text-xs text-gray-400 mb-2">{s.label}</p>
-            <p className="text-3xl font-bold text-white">{s.value}</p>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <Stat label="Total users"   value={data.total_users} />
+        <Stat label="Active users"  value={data.active_users} sub={`${Math.round(data.active_users/Math.max(data.total_users,1)*100)}% of total`} />
+        <Stat label="Active agents" value={data.active_agents} />
+        <Stat label="Audit events"  value={data.total_audit_events} accent />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Role chart */}
-        <div className="bg-[#161b27] border border-[#1e2535] rounded-2xl p-5">
-          <h2 className="text-sm font-medium text-gray-300 mb-4 flex items-center gap-2">
-            <TrendingUp size={14} className="text-gray-500" />Users by role
+        <Card>
+          <h2 className="text-xs font-medium text-[var(--text-3)] uppercase tracking-widest mb-5 flex items-center gap-2">
+            <TrendingUp size={12} /> Users by role
           </h2>
-          <ResponsiveContainer width="100%" height={180}>
-            <BarChart data={data.role_breakdown} barSize={32}>
-              <XAxis dataKey="role" tick={{ fontSize: 11, fill: '#6b7280' }} tickFormatter={v => v.replace('_', ' ')} />
-              <YAxis tick={{ fontSize: 11, fill: '#6b7280' }} allowDecimals={false} />
-              <Tooltip contentStyle={{ background: '#161b27', border: '1px solid #1e2535', borderRadius: 8, fontSize: 12 }}
-                labelStyle={{ color: '#e5e7eb' }} />
+          <ResponsiveContainer width="100%" height={160}>
+            <BarChart data={data.role_breakdown} barSize={28} barCategoryGap="30%">
+              <XAxis dataKey="role" tick={{ fontSize: 10, fill: 'var(--text-3)', fontFamily: 'DM Mono' }}
+                tickFormatter={v => v.replace('_', ' ').slice(0, 8)} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 10, fill: 'var(--text-3)' }} allowDecimals={false}
+                axisLine={false} tickLine={false} width={20} />
+              <Tooltip
+                contentStyle={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 10, fontSize: 12, fontFamily: 'DM Sans' }}
+                labelStyle={{ color: 'var(--text)', fontWeight: 500 }}
+                itemStyle={{ color: 'var(--text-2)' }}
+                cursor={{ fill: 'var(--bg-hover)' }}
+              />
               <Bar dataKey="count" radius={[4,4,0,0]}>
-                {data.role_breakdown.map((_: any, i: number) => <Cell key={i} fill={colors[i % colors.length]} />)}
+                {data.role_breakdown.map((_: any, i: number) => (
+                  <Cell key={i} fill={ACCENT_COLORS[i % ACCENT_COLORS.length]} />
+                ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-        </div>
+        </Card>
 
-        {/* Recent audit */}
-        <div className="bg-[#161b27] border border-[#1e2535] rounded-2xl p-5">
-          <h2 className="text-sm font-medium text-gray-300 mb-4 flex items-center gap-2">
-            <ShieldCheck size={14} className="text-gray-500" />Recent audit log
+        <Card>
+          <h2 className="text-xs font-medium text-[var(--text-3)] uppercase tracking-widest mb-4 flex items-center gap-2">
+            <Shield size={12} /> Audit log
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--success)] pulse-dot ml-auto" />
           </h2>
-          <div className="space-y-2.5 max-h-44 overflow-y-auto">
+          <div className="space-y-0 divide-y divide-[var(--border)] max-h-44 overflow-y-auto">
             {data.recent_audit.map((a: any) => (
-              <div key={a.id} className="flex items-center gap-2.5 text-xs">
-                <div className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${a.success ? 'bg-green-400' : 'bg-red-400'}`} />
-                <span className="text-gray-300 font-medium min-w-0 truncate">{a.action.replace(/_/g, ' ')}</span>
-                <span className="text-gray-600 ml-auto flex-shrink-0">{a.user_email?.split('@')[0] || 'system'}</span>
+              <div key={a.id} className="flex items-center gap-2.5 py-2.5 text-xs">
+                <div className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${a.success ? 'bg-[var(--success)]' : 'bg-[var(--danger)]'}`} />
+                <span className="text-[var(--text)] font-medium flex-1 truncate">
+                  {a.action.replace(/_/g, ' ').toLowerCase()}
+                </span>
+                <span className="font-mono text-[var(--text-3)] flex-shrink-0">
+                  {a.user_email?.split('@')[0] || 'system'}
+                </span>
+                <span className="text-[var(--text-3)] flex-shrink-0 hidden sm:block">
+                  {timeAgo(a.created_at)}
+                </span>
               </div>
             ))}
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   )
