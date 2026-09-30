@@ -1,145 +1,187 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=4f46e5&height=180&section=header&text=Cloud%20UMP&fontSize=56&fontColor=ffffff&fontAlignY=38&animation=fadeIn" width="100%"/>
+# 🛡️ Cloud UMP
 
-<br/>
+### AI-Powered User & Agent Management Portal with Constitutional Guardrails
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=DM+Mono&size=18&duration=3000&pause=1000&color=4F46E5&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=80&lines=AI-Powered+User+%26+Agent+Management+Portal;Who+controls+your+AI+agents%3F;Constitutional+access+control+%E2%80%94+built+by+Joel+Jose)](https://cloud-ump.vercel.app)
-
-<br/>
-
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-4f46e5?style=for-the-badge&logo=vercel&logoColor=white)](https://cloud-ump.vercel.app)
-[![Backend](https://img.shields.io/badge/API-Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://cloudump-production.up.railway.app/api/health)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-cloud--ump.vercel.app-4f46e5?style=for-the-badge&logo=vercel&logoColor=white)](https://cloud-ump.vercel.app)
+[![API Health](https://img.shields.io/badge/API-Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://cloudump-production.up.railway.app/api/health)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](./LICENSE)
 [![Built by Joel](https://img.shields.io/badge/Built%20by-Joel%20Jose-4f46e5?style=for-the-badge)](https://github.com/Joeljozzz)
-[![Stars](https://img.shields.io/github/stars/Joeljozzz/Cloud_UMP?style=for-the-badge&color=4f46e5)](https://github.com/Joeljozzz/Cloud_UMP/stargazers)
 
-<br/>
+<p align="center">
+  <strong>Cloud UMP</strong> is a full-stack user and AI agent management portal engineered around constitutional governance. It enforces runtime safety guardrails, persistent domain memory, and granular role-based access controls across all agent interactions.
+</p>
+
+<!-- Tech Stack Badges -->
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React_18-20232A?style=flat-square&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Python](https://img.shields.io/badge/Python_3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=flat-square&logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)
+[![Hugging Face](https://img.shields.io/badge/Hugging_Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black)](https://huggingface.co/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Railway](https://img.shields.io/badge/Railway-0B0D0E?style=flat-square&logo=railway&logoColor=white)](https://railway.app/)
 
 </div>
 
 ---
 
-## The Problem
+## 🌐 Live Deployment
 
-Most AI agent platforms let you configure what an agent can do.  
-But configuration can be changed. Overridden. Forgotten.
-
-**What if there were rules the agent could never escape — no matter what?**
+Experience the live portal at: **[cloud-ump.vercel.app](https://cloud-ump.vercel.app)**
 
 ---
 
-## The Three-Layer Model
+## 💡 The Core Architecture: Three-Layer Model
 
-<div align="center">
+Traditional AI agent platforms rely solely on system prompts that can be bypassed or overridden. Cloud UMP injects instructions dynamically in strict priority order on every invocation:
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=DM+Mono&size=14&duration=2000&pause=500&color=4F46E5&center=true&vCenter=true&multiline=false&repeat=true&width=600&lines=Layer+1+%E2%80%94+Constitutional+Rules+%5BIMMUTABLE%5D;Layer+2+%E2%80%94+Persistent+Skills+%5BPER+AGENT%5D;Layer+3+%E2%80%94+Agent+Configuration+%5BCONFIGURABLE%5D;All+3+layers+injected+at+runtime+in+priority+order)](https://github.com/Joeljozzz/Cloud_UMP)
-
-</div>
-
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │  LAYER 1 — Constitutional Rules          [IMMUTABLE]    │
-│  Confirm before delete · Stay in scope · No imperson.   │
+│  Confirmation before destruction · In-scope · No spoof  │
 ├─────────────────────────────────────────────────────────┤
 │  LAYER 2 — Persistent Skills             [PER AGENT]    │
-│  Domain rules stored in DB · Survive all conversations  │
+│  Domain rules in DB · Persists across all conversations  │
 ├─────────────────────────────────────────────────────────┤
 │  LAYER 3 — Agent Configuration           [CONFIGURABLE] │
-│  System prompt · Allowed tools · Temperature            │
+│  System prompt · Allowed tools · Hyperparameters        │
 └─────────────────────────────────────────────────────────┘
                           ↓
-              Agent runtime at request time
-        (All 3 layers injected in priority order)
+               Runtime Prompt Assembly
+    (Constitutional layer injected at prompt apex, always)
 ```
 
-> The constitutional layer sits at the **top of every agent prompt**, always.  
-> No skill, no system prompt, no user message can remove it.
+1. **Constitutional Layer (Immutable)**: Hardcoded safety rules that neither administrators, users, nor the model can alter or disregard.
+2. **Persistent Skills Layer**: Granular rules and behavioral guardrails attached to agents that persist across conversations.
+3. **Agent Configuration Layer**: Modifiable agent roles, tool permissions, and system prompts.
 
 ---
 
-## Features
+## ✨ Features
 
-| Feature | Description |
-|---|---|
-| **Constitutional AI guardrails** | Immutable rules injected into every agent prompt |
-| **Persistent skill memory** | Agent rules that survive across all conversations |
-| **Role-based access control** | 5 roles — Viewer, User, Manager, Admin, Super Admin |
-| **Agent access management** | Grant/revoke per-user access to specific agents |
-| **Full audit trail** | Every action logged with user, timestamp, outcome |
-| **Light / Dark mode** | System-aware with manual toggle |
-| **Free AI inference** | HuggingFace Zephyr-7B, zero API cost |
-
----
-
-## Stack
-
-**Frontend** — React 18 · TypeScript · Vite · Tailwind CSS · DM Sans  
-**Backend** — Python · FastAPI · SQLAlchemy · SQLite / PostgreSQL  
-**AI** — HuggingFace Inference API · Zephyr-7B-Beta (free tier)  
-**Deploy** — Vercel (frontend) · Railway (backend)  
-**Auth** — JWT · bcrypt
+- **Constitutional Guardrails**: Enforces non-negotiable boundaries (confirmation before destructive operations, scope limits, impersonation prevention).
+- **Persistent Skill Memory**: Assign modular skills (behavior, restriction, knowledge, preference) stored independently per agent.
+- **Role-Based Access Control (RBAC)**: 5 distinct tiers—`Super Admin`, `Admin`, `Manager`, `User`, and `Viewer`.
+- **Granular Agent Permissions**: Manage user-to-agent access matrices to prevent unauthorized model access.
+- **Interactive Chat Interface**: Secure chat sessions evaluated with real-time constitutional context injection.
+- **Audit Logging**: Comprehensive traceability tracking user actions, system modifications, and agent executions.
+- **Zero-Cost Inference**: Integrated with Hugging Face Inference API (`Zephyr-7B-Beta`).
+- **Responsive Theme**: Native light and dark mode with persistence.
 
 ---
 
-## Quick Start
+## 🛠️ Tech Stack
+
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, Zustand, Recharts, Lucide React
+- **Backend**: Python 3.11+, FastAPI, SQLAlchemy (Async), aiosqlite / asyncpg, Pydantic v2
+- **Authentication**: JWT (JSON Web Tokens), passlib / bcrypt
+- **AI / LLM**: Hugging Face Inference API (Zephyr-7B-Beta)
+- **Deployment**: Vercel (Frontend), Railway (Backend)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** 18+ and **npm**
+- **Python** 3.10+
+- (Optional) Free Hugging Face Access Token
+
+### 1. Clone Repository
 
 ```bash
-# Clone
 git clone https://github.com/Joeljozzz/Cloud_UMP.git
 cd Cloud_UMP
+```
 
-# Backend
+### 2. Backend Setup
+
+```bash
 cd backend
+python -m venv venv
+
+# Windows:
+venv\Scripts\activate
+# Unix/macOS:
+source venv/bin/activate
+
 pip install -r requirements.txt
 cp .env.example .env
 uvicorn app.main:app --reload
+```
 
-# Frontend
+The backend server starts at `http://localhost:8000`.
+
+### 3. Frontend Setup
+
+```bash
 cd ../frontend
 npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`
+The frontend application runs at `http://localhost:5173`.
 
 ---
 
-## Project Structure
+## 📖 Usage
 
-```
+### Pre-Seeded Demo Credentials
+
+The platform initializes demo accounts upon first startup:
+
+| Role | Email | Password | Access Privileges |
+|---|---|---|---|
+| **Super Admin** | `admin@ump.dev` | `admin123` | Full administrative control, all agents & logs |
+| **Manager** | `manager@ump.dev` | `user123` | User & agent management, Helpdesk & Analytics agents |
+| **Demo User** | `user@ump.dev` | `user123` | Chat access to assigned agents (Helpdesk AI) |
+
+### Testing Constitutional Guardrails
+
+1. Log in as `user@ump.dev` and navigate to **Chat**.
+2. Select the **Email Assistant** or **Help Desk AI**.
+3. Attempt to bypass rules (e.g. asking the agent to delete records without confirmation or impersonate an administrator).
+4. Observe the agent enforcing Layer 1 constitutional constraints regardless of prompt injection attempts.
+
+---
+
+## 📂 Project Structure
+
+```text
 Cloud_UMP/
 ├── backend/
-│   └── app/
-│       ├── services/
-│       │   ├── constitutional.py   ← The core concept
-│       │   ├── agent_runner.py     ← HF inference + layer assembly
-│       │   └── rbac.py             ← Permission matrix
-│       ├── routers/                # auth, users, agents, chat, analytics
-│       └── models/                 # User, Agent, Skill, Audit
-└── frontend/
-    └── src/
-        ├── pages/                  # About, Login, Dashboard, Chat...
-        ├── components/             # Layout, Badge, Card, ThemeToggle
-        └── lib/                    # API client, Zustand store
+│   ├── app/
+│   │   ├── core/           # Security, tokens, and app configuration
+│   │   ├── db/             # SQLAlchemy async engine, base, and migrations
+│   │   ├── models/         # User, Agent, AgentSkill, AgentAccess, AuditLog
+│   │   ├── routers/        # auth, users, agents, chat, analytics
+│   │   ├── schemas/        # Pydantic validation schemas
+│   │   └── services/       # constitutional.py, agent_runner.py, rbac.py
+│   ├── requirements.txt    # Python dependencies
+│   └── .env.example        # Environment variable templates
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # UI components (Layout, ThemeToggle, Cards)
+│   │   ├── lib/            # Axios API client, Zustand state stores
+│   │   ├── pages/          # Dashboard, Users, Agents, Chat, Analytics, About
+│   │   ├── App.tsx         # Route configuration & protected routes
+│   │   └── main.tsx        # Client entrypoint
+│   ├── package.json        # Node dependencies and scripts
+│   ├── tailwind.config.js  # Tailwind CSS configuration
+│   └── vite.config.ts      # Vite configuration
+│
+├── LICENSE                 # MIT License
+└── README.md               # Project documentation
 ```
 
 ---
 
-## Deploy
+## 📄 License
 
-**Backend → Railway** — root: `backend` · start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`  
-**Frontend → Vercel** — root: `frontend` · env: `VITE_API_URL=https://your-railway-url.railway.app`
-
----
-
-<div align="center">
-
-<br/>
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=DM+Mono&size=13&duration=4000&pause=1000&color=6B7280&center=true&vCenter=true&repeat=true&width=500&lines=Designed+and+built+with+care+by+Joel+Jose;Data+Science+%7C+ML+%7C+Cloud+%7C+Mumbai;github.com%2FJoeljozzz)](https://github.com/Joeljozzz)
-
-<br/>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=4f46e5&height=100&section=footer&animation=fadeIn" width="100%"/>
-
-</div>
+This project is licensed under the [MIT License](./LICENSE) — copyright (c) 2024 **Joel Jose**.
